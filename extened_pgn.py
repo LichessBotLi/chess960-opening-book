@@ -22,7 +22,7 @@ def extend_game(original_game, engine):
         node = node.add_main_variation(move)
 
     while board.fullmove_number <= MAX_MOVES and not board.is_game_over():
-        result = engine.play(board, chess.engine.Limit(depth=12))
+        result = engine.play(board, chess.engine.Limit(depth=20))
         board.push(result.move)
         node = node.add_main_variation(result.move)
 
