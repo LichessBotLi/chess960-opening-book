@@ -1,0 +1,28 @@
+name: Split Chess960 PGN
+
+on:
+  workflow_dispatch:
+
+jobs:
+  split:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install python-chess
+        run: pip install python-chess
+
+      - name: Run PGN Splitter
+        run: python slit.py
+
+      - name: Upload Output
+        uses: actions/upload-artifact@v3
+        with:
+          name: chess960-split
+          path: split_pgns/
