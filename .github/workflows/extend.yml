@@ -1,0 +1,30 @@
+name: Extend Chess960 PGN to 30 moves
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - chess960_book_3moves.pgn
+
+jobs:
+  extend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Install python-chess
+        run: pip install chess
+
+      - name: Make Stockfish executable
+        run: chmod +x ./stockfish/stockfish-ubuntu-x86-64-bmi2
+
+      - name: Extend PGNs using Stockfish
+        run: python extend_pgn.py
+
+      - name: Upload output PGN as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: extended-chess960
+          path: nor.pgn
