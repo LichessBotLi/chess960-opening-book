@@ -6,7 +6,7 @@ import sys
 INPUT_FOLDER = Path("PGN")
 OUTPUT_FOLDER = Path("extended_pgns")
 STOCKFISH_PATH = "./stockfish/stockfish-ubuntu-x86-64-bmi2"
-MAX_MOVES = 40
+MAX_MOVES = 25
 
 def extend_game(original_game, engine):
     board = original_game.board()
@@ -21,7 +21,7 @@ def extend_game(original_game, engine):
         node = node.add_main_variation(move)
 
     while board.fullmove_number <= MAX_MOVES and not board.is_game_over():
-        result = engine.play(board, chess.engine.Limit(depth=20))
+        result = engine.play(board, chess.engine.Limit(depth=12))
         board.push(result.move)
         node = node.add_main_variation(result.move)
 
