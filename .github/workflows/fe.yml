@@ -1,0 +1,28 @@
+name: Strip Chess960 Moves and Keep FENs
+
+on:
+  workflow_dispatch:
+
+jobs:
+  strip-fens:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install python-chess
+
+      - name: Run FEN-only extractor
+        run: python -u fen.py
+
+      - name: Upload FEN-only PGN
+        uses: actions/upload-artifact@v4
+        with:
+          name: fen-only-pgn
+          path: chess960_book_fen_only.pgn
