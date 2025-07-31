@@ -7,6 +7,7 @@ INPUT_FOLDER = Path("PGN")
 OUTPUT_FOLDER = Path("extended_pgns")
 STOCKFISH_PATH = "./stockfish/stockfish-ubuntu-x86-64-bmi2"
 MAX_MOVES = 25
+DEPTH = 12
 
 def extend_game(original_game, engine, game_index):
     board = original_game.board()
@@ -23,10 +24,23 @@ def extend_game(original_game, engine, game_index):
     print(f"\n[Game {game_index}] Extending from {len(moves)} moves to max {MAX_MOVES} moves")
 
     while board.fullmove_number <= MAX_MOVES and not board.is_game_over():
-        result = engine.play(board, chess.engine.Limit(depth=12))
-        board.push(result.move)
-        node = node.add_main_variation(result.move)
-        san = board.san(result.move)
+        result = engine.play(board, chess.engine.Limit(depth=DEPTH))
+        move = result.move
+
+        # Validate move before applying/logging
+        if move not in board.legal_moves:
+            print(f"[Warning] Illegal move {move} in position: {board.fen()}")
+            break
+
+        board.push(move)
+        node = node.add_main_variation(move)
+
+        try:
+            san = board.san(move)
+        except Exception as e:
+            print(f"[Error] Could not get SAN for move {move}: {e}")
+            san = str(move)
+
         if board.fullmove_number <= 10 or board.fullmove_number % 5 == 0:
             print(f"  → Move {board.fullmove_number}: {san}")
 
