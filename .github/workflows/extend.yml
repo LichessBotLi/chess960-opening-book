@@ -32,7 +32,7 @@ jobs:
         run: chmod +x ./stockfish/stockfish-ubuntu-x86-64-bmi2
 
       - name: Run extension script
-        run: python -u extend_batch.py ${{ inputs.batch_start }} ${{ inputs.batch_size }}
+        run: python -u extend_pgn.py ${{ inputs.batch_start }} ${{ inputs.batch_size }}
 
       - name: Upload output PGN as artifact
         uses: actions/upload-artifact@v4
