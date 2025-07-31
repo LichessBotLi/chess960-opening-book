@@ -27,4 +27,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: extended-chess960
-          path: extend_pgn/
+          path: extended_pgns/
