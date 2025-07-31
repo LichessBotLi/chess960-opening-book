@@ -3,7 +3,7 @@ import chess.engine
 from pathlib import Path
 import sys
 
-INPUT_FOLDER = Path("PGN")
+INPUT_FOLDER = Path("PNG")
 OUTPUT_FOLDER = Path("extended_pgns")
 STOCKFISH_PATH = "./stockfish/stockfish-ubuntu-x86-64-bmi2"
 MAX_MOVES = 25
