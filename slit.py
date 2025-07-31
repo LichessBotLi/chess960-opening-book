@@ -2,7 +2,7 @@ import chess.pgn
 import os
 import math
 
-INPUT_FILE = "chess960_book_3moves.pgn"
+INPUT_FILE = "chess960.pgn"
 OUTPUT_DIR = "split_pgns"
 GAMES_PER_FILE = 1001
 TOTAL_GAMES = 128137
