@@ -21,10 +21,10 @@ jobs:
         run: chmod +x ./stockfish/stockfish-ubuntu-x86-64-bmi2
 
       - name: Extend PGNs using Stockfish
-        run: python extend_pgn.py
+        run: python extend_pgn.py 1 10
 
       - name: Upload output PGN as artifact
         uses: actions/upload-artifact@v4
         with:
           name: extended-chess960
-          path: nor.pgn
+          path: extend.pgn
