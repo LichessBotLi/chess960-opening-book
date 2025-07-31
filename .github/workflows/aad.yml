@@ -1,0 +1,41 @@
+name: Extend PGNs
+
+on:
+  workflow_dispatch:
+    inputs:
+      batch_start:
+        description: 'Start index (1-based)'
+        required: true
+        default: '1'
+      batch_size:
+        description: 'How many PGNs to process'
+        required: true
+        default: '10'
+
+jobs:
+  extend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install chess
+
+      - name: Make Stockfish executable
+        run: chmod +x ./stockfish/stockfish-ubuntu-x86-64-bmi2
+
+      - name: Run extension script
+        run: python -u extend_pgn.py ${{ inputs.batch_start }} ${{ inputs.batch_size }}
+
+      - name: Upload output PGN as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: extended-chess960
+          path: extended_pgns/
